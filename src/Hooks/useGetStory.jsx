@@ -18,8 +18,6 @@ export default function useGetStory() {
     const fetchStory = async (prompt) => {
         setIsLoading(true);
         try {
-            console.log(prompt)
-
             const response = await openai.createChatCompletion({
                 model: "gpt-3.5-turbo",
                 messages: [

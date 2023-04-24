@@ -1,9 +1,10 @@
 // App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import UserForm from './Components/UserForm';
 import { LIGHT_THEME, DARK_THEME } from './assets/themes';
 import './styles/App.css';
 import useGetStory from './Hooks/useGetStory';
+import Story from './Components/Story';
 const App = () => {
   const [theme, setTheme] = useState(LIGHT_THEME);
   const [story, setStory] = useState();
@@ -15,7 +16,7 @@ const App = () => {
   }, [theme]);
 
   useEffect(() => {
-    if(data) {
+    if (data) {
       setStory(data.data.choices[0].message.content)
     }
   }, [data])
@@ -30,8 +31,12 @@ const App = () => {
       <button onClick={toggleTheme} className="dark-mode-btn">
         Toggle Dark Mode
       </button>
-      <UserForm theme={theme} setStory={setStory} fetchStory={fetchStory}/>
-      {isLoading ? <h1 style={{color: 'red'}}>LOADING</h1> : <p>{story}</p>}
+      <UserForm theme={theme} setStory={setStory} fetchStory={fetchStory} />
+      {isLoading ? <h1 style={{ color: 'red' }}>Loading...</h1> :
+        <>
+         <Story text={story}></Story>
+        </>
+      }
     </div>
   );
 };
