@@ -1,3 +1,5 @@
+
+//A helper function that takes in a series of form parameters and returns a string with instructions that we'll send to OpenAI's ChatGPT
 export const generatePrompt = ({ firstName, occupation, funFact, storyGenre, famousAuthor }) => {
     // Check if there is an author that the user inputted with ternary operator
     const basePrompt = `Generate an interesting, brief (<100 words), and well-written ${storyGenre} short story about a person named ${firstName} who works as a(n) ${occupation}. An interesting fact about ${firstName}: ${funFact}.` 

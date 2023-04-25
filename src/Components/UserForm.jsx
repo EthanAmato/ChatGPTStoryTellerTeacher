@@ -3,6 +3,8 @@ import '../styles/UserForm.css'
 import { generatePrompt } from '../Helper/generatePrompt';
 
 const UserForm = ({theme, fetchStory}) => {
+
+  //Just going to use a single object to store all of our form inputs
   const [formData, setFormData] = useState({
     firstName: '',
     occupation: '',
@@ -11,14 +13,20 @@ const UserForm = ({theme, fetchStory}) => {
     famousAuthor: ''
   });
 
+  //Start with 0 errors in errors state, so we have a blank object
   const [errors, setErrors] = useState({});
-
-  const [prompt, setPrompt] = useState('')
 
 
   const handleChange = (e) => {
+    //name will store the name of the input we're typing in
+    //value will store the actual text that the user types in the input field
     const { name, value } = e.target;
+
+    //constantly update our formData state object with this information
     setFormData({ ...formData, [name]: value });
+
+    //keep track of whether there are any errors for all input fields simultaneously
+    //if someone types in a field, immediately rescind error
     setErrors({ ...errors, [name]: '' });
   };
 
@@ -27,12 +35,15 @@ const UserForm = ({theme, fetchStory}) => {
 
     // Validate form data
     const formErrors = {};
+
+    //If there is a blank field, set a key at that field with value 'Field is required'
     if (!formData.firstName) formErrors.firstName = 'First name is required';
     if (!formData.occupation) formErrors.occupation = 'Occupation is required';
     if (!formData.funFact) formErrors.funFact = 'Fun fact is required';
     if (!formData.storyGenre) formErrors.storyGenre = 'Story genre is required';
 
     // Set errors and prevent form submission if there are any errors
+    // Goes through the keys of the formErrors object made above - if there are any errors, set errors to our formErrors obj
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
